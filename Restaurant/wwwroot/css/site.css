@@ -31,3 +31,8 @@ body {
     margin-left:89vw;
     margin-top:1vh;
 }
+.nav-item a {
+    text-decoration: none;
+    color: inherit;
+    cursor: default;
+}

@@ -1,11 +1,12 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Restaurant.Areas.Identity.Data;
+using Restaurant.Data;
 var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("RestaurantDbContextConnection") ?? throw new InvalidOperationException("Connection string 'RestaurantDbContextConnection' not found.");
 
 builder.Services.AddDbContext<RestaurantDbContext>(options => options.UseSqlServer(connectionString));
-
+builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("RestaurantDbContextConnection")));
 builder.Services.AddDefaultIdentity<RestaurantUser>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<RestaurantDbContext>();
 
 // Add services to the container.
@@ -32,10 +33,19 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 app.MapRazorPages();//to run identity pages
-app.MapGet("/", ctx =>//redirect to login page directly
+app.MapGet("/", ctx =>
 {
+    if (ctx.User.Identity.IsAuthenticated)
+    {
+        // User is already authenticated, redirect to another page
+        ctx.Response.Redirect("/Home/LoginSuccessful");
+    }
+    else
+    {
+        // User is not authenticated, redirect to the login page
+        ctx.Response.Redirect("/Identity/Account/Login");
+    }
 
-    ctx.Response.Redirect("/Identity/Account/Login");
     return Task.CompletedTask;
 });
 app.Run();
