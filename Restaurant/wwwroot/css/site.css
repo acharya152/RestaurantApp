@@ -19,4 +19,15 @@ html {
 
 body {
   margin-bottom: 60px;
+  background-color:white;
+}
+.text-center{
+    margin-top:30vh;
+    color:black;
+}
+.btn-danger {
+    
+    position:relative;
+    margin-left:89vw;
+    margin-top:1vh;
 }

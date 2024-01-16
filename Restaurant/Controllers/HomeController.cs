@@ -17,6 +17,12 @@ namespace Restaurant.Controllers
         {
             return View();
         }
+        public IActionResult LoginSuccessful()
+        {
+            return View();
+        }
+
+
 
         public IActionResult Privacy()
         {

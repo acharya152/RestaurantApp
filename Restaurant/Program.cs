@@ -32,4 +32,10 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 app.MapRazorPages();//to run identity pages
+app.MapGet("/", ctx =>//redirect to login page directly
+{
+
+    ctx.Response.Redirect("/Identity/Account/Login");
+    return Task.CompletedTask;
+});
 app.Run();
