@@ -7,6 +7,7 @@ var connectionString = builder.Configuration.GetConnectionString("RestaurantDbCo
 
 builder.Services.AddDbContext<RestaurantDbContext>(options => options.UseSqlServer(connectionString));
 builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("RestaurantDbContextConnection")));
+builder.Services.AddDbContext<ApplicationDbContext2>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("RestaurantDbContextConnection")));
 builder.Services.AddDefaultIdentity<RestaurantUser>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<RestaurantDbContext>();
 
 // Add services to the container.
@@ -38,7 +39,7 @@ app.MapGet("/", ctx =>
     if (ctx.User.Identity.IsAuthenticated)
     {
         // User is already authenticated, redirect to another page
-        ctx.Response.Redirect("/Home/LoginSuccessful");
+        ctx.Response.Redirect("/DetailsRestroes/Index");
     }
     else
     {

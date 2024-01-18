@@ -5,11 +5,11 @@ namespace Restaurant.Data
 {
     public class ApplicationDbContext:DbContext
     {
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext>options) : base(options)
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
                 
         }
 
-        public DbSet<ResturantDetail>Details {  get; set; }
+        public DbSet<DetailsRestro> DetailsRestroo {  get; set; }
     }
 }

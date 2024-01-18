@@ -8,28 +8,35 @@ using Restaurant.Data;
 
 #nullable disable
 
-namespace Restaurant.Migrations.ApplicationDb
+namespace Restaurant.Migrations.ApplicationDbContext2Migrations
 {
-    [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240116105919_newtabledetails")]
-    partial class newtabledetails
+    [DbContext(typeof(ApplicationDbContext2))]
+    [Migration("20240118055242_updated")]
+    partial class updated
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.0")
+                .HasAnnotation("ProductVersion", "8.0.1")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("Restaurant.Models.ResturantDetail", b =>
+            modelBuilder.Entity("Restaurant.Models.DetailsRestro", b =>
                 {
-                    b.Property<string>("ID")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
 
                     b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("DetailedDescription")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -41,9 +48,21 @@ namespace Restaurant.Migrations.ApplicationDb
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("PhoneNo")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Time")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Website")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("ID");
 
-                    b.ToTable("Details");
+                    b.ToTable("DetailsRestroo");
                 });
 #pragma warning restore 612, 618
         }

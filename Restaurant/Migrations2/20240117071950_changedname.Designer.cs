@@ -2,17 +2,20 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Restaurant.Data;
 
 #nullable disable
 
-namespace Restaurant.Migrations.ApplicationDb
+namespace Restaurant.Migrations.ApplicationDbContext2Migrations
 {
-    [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [DbContext(typeof(ApplicationDbContext2))]
+    [Migration("20240117071950_changedname")]
+    partial class changedname
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,12 +24,23 @@ namespace Restaurant.Migrations.ApplicationDb
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("Restaurant.Models.ResturantDetail", b =>
+            modelBuilder.Entity("Restaurant.Models.DetailsRestro", b =>
                 {
-                    b.Property<string>("ID")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
 
                     b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("DetailedDescription")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("DetailedDescription3")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -40,7 +54,7 @@ namespace Restaurant.Migrations.ApplicationDb
 
                     b.HasKey("ID");
 
-                    b.ToTable("Details");
+                    b.ToTable("DetailsRestroo");
                 });
 #pragma warning restore 612, 618
         }

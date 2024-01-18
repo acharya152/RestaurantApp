@@ -104,7 +104,7 @@ namespace Restaurant.Areas.Identity.Pages.Account
 
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
-            returnUrl ??= Url.Content("/Home/LoginSuccessful");
+            returnUrl ??= Url.Content("/DetailsRestroes/Index");
 
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
 

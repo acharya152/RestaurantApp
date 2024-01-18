@@ -7,14 +7,22 @@
 <ul class="navbar-nav">
 @if (SignInManager.IsSignedIn(User))
 {
+        <li class="nav-item">
+            <h4>
+                <a id="manage" asp-action="Index" title="Manage">
+                    Restro.
+                </a>
+            </h4>
+        </li>
     <li class="nav-item">
         <!--
             <a id="manage" class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">@UserManager.GetUserName(User)!</a>
         -->
             <a id="manage"  asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">
-                <img src="~/icon.png" alt="Profile Picture" width="50" height="50" />
+                <img src="~/icon.png" alt="Profile Picture" width="35" height="35" />
             </a>
             </li>
+
     <li class="nav-item">
         <form id="logoutForm" class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
                 <button id="logout" type="submit" class="btn btn-danger" >Logout</button>

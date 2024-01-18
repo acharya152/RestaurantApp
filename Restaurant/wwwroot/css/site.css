@@ -25,14 +25,29 @@ body {
     margin-top:30vh;
     color:black;
 }
-.btn-danger {
-    
-    position:relative;
-    margin-left:89vw;
-    margin-top:1vh;
-}
+
 .nav-item a {
     text-decoration: none;
     color: inherit;
     cursor: default;
+}
+.nav-item img {
+    position: relative;
+    margin-left: 80vw;
+}
+#create_btn{
+    margin-left:65vw;
+}
+#logout {
+    position: relative;
+    margin-left: 1vw;
+}
+th,td{
+    text-align:justify;
+}
+.buttons{
+    display:flex;
+}
+.return_btn{
+    margin-left:1vw;
 }
