@@ -8,10 +8,10 @@ namespace Restaurant.Models
         public string Name { get; set; }
         public string Location { get; set; }
         public string Description { get; set; }
-        public string DetailedDescription { get; set; }
+        public string? DetailedDescription { get; set; }    
         public string PhoneNo { get; set; }
         public string Time { get; set; }
         public string Website { get; set; }
-        public string Photo {  get; set; }
+       
     }
 }

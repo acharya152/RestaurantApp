@@ -50,4 +50,10 @@
     <PackageReference Include="SendGrid" Version="9.29.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Uploads\" />
+    <Folder Include="wwwroot\lib\NewFolder1\" />
+    <Folder Include="wwwroot\lib\NewFolder\" />
+  </ItemGroup>
+
 </Project>

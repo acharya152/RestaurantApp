@@ -61,12 +61,20 @@
                     @Html.DisplayFor(modelItem => item.Time)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Website)
+                    
+                   
+                        @{
+                            string websiteUrl = item.Website.StartsWith("http://") || item.Website.StartsWith("https://") ? item.Website
+                        : "https://" + item.Website;
+                    }
+                    <a href="@websiteUrl" target="_blank">@Html.DisplayFor(modelItem => item.Website)</a>
                 </td>
             <td>
+                <div class="actionbtn">
                     <a class="btn btn-outline-success" asp-action="Edit" asp-route-id="@item.ID">Edit</a> 
                     <a class="btn btn-outline-primary" asp-action="Details" asp-route-id="@item.ID">Details</a> 
                     <a class="btn btn-outline-danger" asp-action="Delete" asp-route-id="@item.ID">Delete</a>
+                    </div>
             </td>
         </tr>
 }

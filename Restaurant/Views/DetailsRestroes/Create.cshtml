@@ -30,8 +30,8 @@
             </div>
             <div class="form-group">
                 <label asp-for="DetailedDescription" class="control-label"></label>
-                <input asp-for="DetailedDescription" class="form-control" />
-                <span asp-validation-for="DetailedDescription" class="text-danger"></span>
+                <textarea asp-for="DetailedDescription" class="form-control" maxlength="500"></textarea>
+                <span asp-validation-for="DetailedDescription" class="text-danger"></span> 
             </div>
              <div class="form-group">
                 <label asp-for="PhoneNo" class="control-label"></label>
@@ -44,11 +44,10 @@
                 <span asp-validation-for="Time" class="text-danger"></span>
             </div>
              <div class="form-group">
-                <label asp-for="Website" class="control-label"></label>
+                <label asp-for="Website" class="control-label"></label><label>(Link)</label>
                 <input asp-for="Website" class="form-control" />
                 <span asp-validation-for="Website" class="text-danger"></span>
-            </div>
-            <br />
+            </div><br />
             <div class="buttons">
             <div class="form-group">
                 <input type="submit" value="Add" class="btn btn-success" />

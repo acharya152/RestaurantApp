@@ -51,3 +51,15 @@ th,td{
 .return_btn{
     margin-left:1vw;
 }
+.actionbtn a {
+    display: block;
+    margin-right: 0px;
+    margin-top:1vh;
+}
+#description{
+    text-align:justify;
+}
+table{
+   
+   overflow:auto;
+}

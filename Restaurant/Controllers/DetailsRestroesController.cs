@@ -64,6 +64,7 @@ namespace Restaurant.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("ID,Name,Location,Description,DetailedDescription,PhoneNo,Time,Website")] DetailsRestro detailsRestro)
         {
+           
             if (ModelState.IsValid)
             {
                 _context.Add(detailsRestro);
