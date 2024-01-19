@@ -6,12 +6,13 @@
 }
 
 
-<div>
+<div >
     <h4>About</h4>
     <hr />
     <div>
         <img src="~/lib/Images/@Html.DisplayFor(model => model.Photo)" style="width:500px; height: 500px;" />
     </div>
+    <div>
     <dl class="row">
         @* dd class="col-sm-10">
             <img src="~/lib/Images/@Html.DisplayFor(model => model.Photo)" />
@@ -70,6 +71,7 @@
             <a href="@websiteUrl" target="_blank">@Html.DisplayFor(modelItem => Model.Website)</a>
         </dd>
     </dl>
+    </div>
 </div>
 
 

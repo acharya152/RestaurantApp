@@ -45,7 +45,7 @@ body {
     margin-left: 1vw;
 }
 th,td{
-    text-align:justify;
+    text-align:left;
 }
 .buttons{
     display:flex;
