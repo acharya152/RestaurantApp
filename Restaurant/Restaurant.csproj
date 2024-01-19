@@ -10,15 +10,23 @@
     <Compile Remove="Migrations\**" />
     <Compile Remove="Views\ResturantDetails1\**" />
     <Compile Remove="Views\ResturantDetails\**" />
+    <Compile Remove="wwwroot\lib\NewFolder1\**" />
+    <Compile Remove="wwwroot\lib\NewFolder\**" />
     <Content Remove="Migrations\**" />
     <Content Remove="Views\ResturantDetails1\**" />
     <Content Remove="Views\ResturantDetails\**" />
+    <Content Remove="wwwroot\lib\NewFolder1\**" />
+    <Content Remove="wwwroot\lib\NewFolder\**" />
     <EmbeddedResource Remove="Migrations\**" />
     <EmbeddedResource Remove="Views\ResturantDetails1\**" />
     <EmbeddedResource Remove="Views\ResturantDetails\**" />
+    <EmbeddedResource Remove="wwwroot\lib\NewFolder1\**" />
+    <EmbeddedResource Remove="wwwroot\lib\NewFolder\**" />
     <None Remove="Migrations\**" />
     <None Remove="Views\ResturantDetails1\**" />
     <None Remove="Views\ResturantDetails\**" />
+    <None Remove="wwwroot\lib\NewFolder1\**" />
+    <None Remove="wwwroot\lib\NewFolder\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -52,8 +60,7 @@
 
   <ItemGroup>
     <Folder Include="Uploads\" />
-    <Folder Include="wwwroot\lib\NewFolder1\" />
-    <Folder Include="wwwroot\lib\NewFolder\" />
+    <Folder Include="wwwroot\lib\Images\" />
   </ItemGroup>
 
 </Project>

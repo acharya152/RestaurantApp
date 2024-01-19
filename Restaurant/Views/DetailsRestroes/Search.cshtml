@@ -1,0 +1,82 @@
+﻿@model Restaurant.Models.DetailsRestro
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<partial name="Alert" />
+
+<p>
+    <a class="btn btn-outline-danger" asp-action="Create">Add New Restro.</a>
+</p>
+
+<form asp-action="Search" class="d-flex">
+    <div class="input-group">
+        <input name="obj" class="form-control" placeholder="Search By Name." style="width:30vw" required />
+        <div class="input-group-append">
+            <button class="btn btn-primary" type="submit" name="Search">Search</button>
+        </div>
+    </div>
+</form>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Location)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+            
+            <th>
+                @Html.DisplayNameFor(model => model.PhoneNo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Time)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Website)
+            </th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+                @Html.DisplayFor(model => model.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(model => model.Location)
+            </td>
+            <td>
+                @Html.DisplayFor(model => model.Description)
+            </td>
+            
+            <td>
+                @Html.DisplayFor(model => model.PhoneNo)
+            </td>
+            <td>
+                @Html.DisplayFor(model => model.Time)
+            </td>
+            <td>
+                @{
+                    string websiteUrl = Model.Website.StartsWith("http://") || Model.Website.StartsWith("https://") ? Model.Website
+                    : "https://" + Model.Website;
+                }
+                <a href="@websiteUrl" target="_blank">@Html.DisplayFor(model => model.Website)</a>
+            </td>
+            <td>
+                <div class="actionbtn">
+                    <a class="btn btn-outline-success" asp-action="Edit" asp-route-id="@Model.ID">Edit</a>
+                    <a class="btn btn-outline-primary" asp-action="Details" asp-route-id="@Model.ID">Details</a>
+                    <a class="btn btn-outline-danger" asp-action="Delete" asp-route-id="@Model.ID">Delete</a>
+                </div>
+            </td>
+        </tr>
+    </tbody>
+</table>

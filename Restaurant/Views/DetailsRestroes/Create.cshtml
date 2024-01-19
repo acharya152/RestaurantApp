@@ -39,15 +39,26 @@
                 <span asp-validation-for="PhoneNo" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Time" class="control-label"></label>
-                <input asp-for="Time" class="form-control" />
+                <label>Open </label> <label asp-for="Time" class="control-label"></label>
+                <input asp-for="Time" class="form-control"type="time" />
                 <span asp-validation-for="Time" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+               <label asp-for="CloseTime" class="control-label"></label>
+                <input asp-for="CloseTime" class="form-control" type="time" />
+                <span asp-validation-for="CloseTime" class="text-danger"></span>
             </div>
              <div class="form-group">
                 <label asp-for="Website" class="control-label"></label><label>(Link)</label>
                 <input asp-for="Website" class="form-control" />
                 <span asp-validation-for="Website" class="text-danger"></span>
-            </div><br />
+            </div>
+            <div class="form-group">
+                <label asp-for="Photo" class="control-label"></label>
+                <input asp-for="Photo" class="form-control" type="file" />
+                <span asp-validation-for="Photo" class="text-danger"></span>
+            </div>
+            <br />
             <div class="buttons">
             <div class="form-group">
                 <input type="submit" value="Add" class="btn btn-success" />

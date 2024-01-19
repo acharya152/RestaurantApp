@@ -48,6 +48,10 @@ th,td{
 .buttons{
     display:flex;
 }
+#buttons {
+    display: flex;
+    
+}
 .return_btn{
     margin-left:1vw;
 }

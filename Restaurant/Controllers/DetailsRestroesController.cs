@@ -2,12 +2,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using PagedList.EntityFramework;
 using Restaurant.Data;
 using Restaurant.Models;
+using PagedList.Mvc;
+using PagedList;
 
 
 namespace Restaurant.Controllers
@@ -24,13 +27,22 @@ namespace Restaurant.Controllers
         // GET: DetailsRestroes
         public async Task<IActionResult> Index()
         {
-             return View(await _context.DetailsRestroo.ToListAsync());
-            //int pageSize = 10; // Number of items per page
-            //int pageNumber = page ?? 1; // Default to page 1 if no page is specified
+            return View(await _context.DetailsRestroo.ToListAsync());
 
-            //var model = await _context.DetailsRestroo.ToPagedListAsync(pageNumber, pageSize);
-
-            //return View(model);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Search(string obj)
+        {
+           
+            var result =  _context.DetailsRestroo
+        .FirstOrDefault(d => d.Name.ToUpper().StartsWith(obj.ToUpper()));
+            if (result == null)
+            {
+                TempData["notfound"] = "Restaurant Not Found";
+                return RedirectToAction("Index");
+            }
+            return View(result);
         }
 
         // GET: DetailsRestroes/Details/5
@@ -62,9 +74,9 @@ namespace Restaurant.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,Name,Location,Description,DetailedDescription,PhoneNo,Time,Website")] DetailsRestro detailsRestro)
+        public async Task<IActionResult> Create([Bind("ID,Name,Location,Description,DetailedDescription,PhoneNo,Time,CloseTime,Website,Photo")] DetailsRestro detailsRestro)
         {
-           
+
             if (ModelState.IsValid)
             {
                 _context.Add(detailsRestro);
@@ -96,7 +108,7 @@ namespace Restaurant.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,Name,Location,Description,DetailedDescription,PhoneNo,Time,Website")] DetailsRestro detailsRestro)
+        public async Task<IActionResult> Edit(int id, [Bind("ID,Name,Location,Description,DetailedDescription,PhoneNo,Time,CloseTime,Website,Photo")] DetailsRestro detailsRestro)
         {
             if (id != detailsRestro.ID)
             {
@@ -164,5 +176,8 @@ namespace Restaurant.Controllers
         {
             return _context.DetailsRestroo.Any(e => e.ID == id);
         }
+
+        
+       
     }
 }

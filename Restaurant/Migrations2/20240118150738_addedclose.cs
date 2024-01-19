@@ -1,28 +1,29 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
 namespace Restaurant.Migrations.ApplicationDbContext2Migrations
 {
     /// <inheritdoc />
-    public partial class addedphotocolumn : Migration
+    public partial class addedclose : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AddColumn<string>(
-                name: "Photo",
+            migrationBuilder.AddColumn<DateTime>(
+                name: "CloseTime",
                 table: "DetailsRestroo",
-                type: "nvarchar(max)",
+                type: "datetime2",
                 nullable: false,
-                defaultValue: "");
+                defaultValue: new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified));
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropColumn(
-                name: "Photo",
+                name: "CloseTime",
                 table: "DetailsRestroo");
         }
     }

@@ -10,6 +10,14 @@
 <p>
     <a class="btn btn-outline-danger"asp-action="Create">Add New Restro.</a>
 </p>
+<form asp-action="Search" class="d-flex">
+    <div class="input-group">
+        <input name="obj" class="form-control" placeholder="Search By Name." style="width:30vw" required />
+        <div class="input-group-append">
+            <button class="btn btn-primary" type="submit" name="Search">Search</button>
+        </div>
+    </div>
+</form>
 <table class="table">
     <thead>
         <tr>
@@ -22,16 +30,18 @@
             <th>
                 @Html.DisplayNameFor(model => model.Description)
             </th>
-            <th>
-                Overview
-               <!-- @Html.DisplayNameFor(model => model.DetailedDescription)-->
-            </th>
+           
             <th> 
                 @Html.DisplayNameFor(model => model.PhoneNo)
             </th>
+            <!--
             <th>
                 @Html.DisplayNameFor(model => model.Time)
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CloseTime)
+            </th>
+            -->
             <th>
                 @Html.DisplayNameFor(model => model.Website)
             </th>
@@ -51,15 +61,18 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Description)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DetailedDescription)
-            </td>
+            
                 <td>
                     @Html.DisplayFor(modelItem => item.PhoneNo)
                 </td>
+          <!--      
                 <td>
                     @Html.DisplayFor(modelItem => item.Time)
                 </td>
+                <td>
+                @Html.DisplayFor(modelItem => item.CloseTime)
+                </td>
+                  -->
                 <td>
                     
                    
