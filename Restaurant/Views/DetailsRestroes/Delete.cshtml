@@ -10,6 +10,9 @@
 <div>
   
     <hr />
+    <div>
+        <img src="~/lib/Images/@Html.DisplayFor(model => model.Photo)" style="width:500px; height: 500px;" />
+    </div>
     <dl class="row">
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Name)
@@ -57,9 +60,14 @@
             @Html.DisplayNameFor(model => model.Website)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Website)
+            @{
+                string websiteUrl = Model.Website.StartsWith("http://") || Model.Website.StartsWith("https://") ? Model.Website
+                : "https://" + Model.Website;
+            }
+            <a href="@websiteUrl" target="_blank">@Html.DisplayFor(modelItem => Model.Website)</a>
         </dd>
     </dl>
+    
     
     <form asp-action="Delete">
         <input type="hidden" asp-for="ID" />

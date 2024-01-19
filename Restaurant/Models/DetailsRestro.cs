@@ -14,7 +14,9 @@ namespace Restaurant.Models
         public TimeOnly CloseTime { get; set; } 
         public string Website { get; set; }
 
-        public string Photo { get; set; }
+       public string? Photo { get; set; }
+       
+       
 
 
     }

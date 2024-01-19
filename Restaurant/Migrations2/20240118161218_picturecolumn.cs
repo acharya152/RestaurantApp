@@ -11,9 +11,9 @@ namespace Restaurant.Migrations.ApplicationDbContext2Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AddColumn<string>(
-                name: "Photo",
+                name: "Cover",
                 table: "DetailsRestroo",
-                type: "nvarchar(max)",
+                type: "IFormfile",
                 nullable: false,
                 defaultValue: "");
         }
@@ -22,7 +22,7 @@ namespace Restaurant.Migrations.ApplicationDbContext2Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropColumn(
-                name: "Photo",
+                name: "Cover",
                 table: "DetailsRestroo");
         }
     }

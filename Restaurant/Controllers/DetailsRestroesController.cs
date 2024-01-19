@@ -11,6 +11,12 @@ using Restaurant.Data;
 using Restaurant.Models;
 using PagedList.Mvc;
 using PagedList;
+using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.Extensions.Hosting;
+using NuGet.Packaging.Signing;
+using System.IO;
+using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Hosting.Internal;
 
 
 namespace Restaurant.Controllers
@@ -18,10 +24,12 @@ namespace Restaurant.Controllers
     public class DetailsRestroesController : Controller
     {
         private readonly ApplicationDbContext2 _context;
+        private readonly IWebHostEnvironment _hostEnvironment;
 
-        public DetailsRestroesController(ApplicationDbContext2 context)
+        public DetailsRestroesController(ApplicationDbContext2 context, IWebHostEnvironment hostEnvironment)
         {
             _context = context;
+            _hostEnvironment = hostEnvironment;
         }
 
         // GET: DetailsRestroes
@@ -74,11 +82,28 @@ namespace Restaurant.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,Name,Location,Description,DetailedDescription,PhoneNo,Time,CloseTime,Website,Photo")] DetailsRestro detailsRestro)
+        public async Task<IActionResult> Create([Bind("ID,Name,Location,Description,DetailedDescription,PhoneNo,Time,CloseTime,Website")] DetailsRestro detailsRestro,IFormFile photoFile)
         {
 
             if (ModelState.IsValid)
             {
+                if (photoFile != null && photoFile.Length > 0)
+                {
+                    // Generate a unique file name based on GUID
+                    string fileName = Guid.NewGuid().ToString() + Path.GetExtension(photoFile.FileName);
+
+                    // Set the path where you want to save the photo
+                    string path = Path.Combine(_hostEnvironment.WebRootPath, "lib", "Images", fileName);
+
+                    // Save the file to the server
+                    using (var fileStream = new FileStream(path, FileMode.Create))
+                    {
+                        await photoFile.CopyToAsync(fileStream);
+                    }
+
+                    detailsRestro.Photo = fileName;
+                }
+
                 _context.Add(detailsRestro);
                 await _context.SaveChangesAsync();
                 TempData["message"] = "New Restaurant Added Successfully.";
@@ -108,7 +133,8 @@ namespace Restaurant.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,Name,Location,Description,DetailedDescription,PhoneNo,Time,CloseTime,Website,Photo")] DetailsRestro detailsRestro)
+        [ActionName("Edit")]
+        public async Task<IActionResult> Edit(int id, [Bind("ID,Name,Location,Description,DetailedDescription,PhoneNo,Time,CloseTime,Website")] DetailsRestro detailsRestro, IFormFile? photoFile)
         {
             if (id != detailsRestro.ID)
             {
@@ -119,9 +145,40 @@ namespace Restaurant.Controllers
             {
                 try
                 {
-                    _context.Update(detailsRestro);
-                    TempData["message"] = "Restaurant Updated Successfully.";
-                    await _context.SaveChangesAsync();
+                    if (ModelState.IsValid)
+                    {
+                        if (photoFile != null && photoFile.Length > 0)
+                        {
+                            // Generate a unique file name based on GUID
+                            string fileName = Guid.NewGuid().ToString() + Path.GetExtension(photoFile.FileName);
+
+                            // Set the path where you want to save the photo
+                            string path = Path.Combine(_hostEnvironment.WebRootPath, "lib", "Images", fileName);
+
+                            // Save the file to the server
+                            using (var fileStream = new FileStream(path, FileMode.Create))
+                            {
+                                await photoFile.CopyToAsync(fileStream);
+                            }
+
+                            detailsRestro.Photo = fileName;
+                        }
+                        else
+                        {
+                            DetailsRestro existingDetailsRestro = await _context.DetailsRestroo.FirstOrDefaultAsync(r => r.ID == id);
+
+                            // Detach the existingDetailsRestro from the context
+                            _context.Entry(existingDetailsRestro).State = EntityState.Detached;
+
+                            // Assign the existing photo value to detailsRestro.Photo
+                            detailsRestro.Photo = existingDetailsRestro.Photo;
+
+                        }
+                        _context.Update(detailsRestro);
+                     
+                        TempData["message"] = "Restaurant Updated Successfully.";
+                        await _context.SaveChangesAsync();
+                    }
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -165,6 +222,7 @@ namespace Restaurant.Controllers
             var detailsRestro = await _context.DetailsRestroo.FindAsync(id);
             if (detailsRestro != null)
             {
+                
                 _context.DetailsRestroo.Remove(detailsRestro);
             }
             TempData["message"] = "Restaurant Removed Successfully.";
