@@ -2,6 +2,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Restaurant.Areas.Identity.Data;
 using Restaurant.Data;
+using Restaurant.Infrastructure;
+using Restaurant.Services;
 var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("RestaurantDbContextConnection") ?? throw new InvalidOperationException("Connection string 'RestaurantDbContextConnection' not found.");
 
@@ -9,7 +11,7 @@ builder.Services.AddDbContext<RestaurantDbContext>(options => options.UseSqlServ
 builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("RestaurantDbContextConnection")));
 builder.Services.AddDbContext<ApplicationDbContext2>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("RestaurantDbContextConnection")));
 builder.Services.AddDefaultIdentity<RestaurantUser>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<RestaurantDbContext>();
-
+builder.Services.AddTransient<IRestro, Restrorepo>();
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 

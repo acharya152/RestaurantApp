@@ -17,6 +17,7 @@ using NuGet.Packaging.Signing;
 using System.IO;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Hosting.Internal;
+using Restaurant.Infrastructure;
 
 
 namespace Restaurant.Controllers
@@ -24,10 +25,15 @@ namespace Restaurant.Controllers
     public class DetailsRestroesController : Controller
     {
         private readonly ApplicationDbContext2 _context;
+        private readonly IRestro _restro;
+
+       
+
         private readonly IWebHostEnvironment _hostEnvironment;
 
-        public DetailsRestroesController(ApplicationDbContext2 context, IWebHostEnvironment hostEnvironment)
+        public DetailsRestroesController(ApplicationDbContext2 context, IWebHostEnvironment hostEnvironment, IRestro restro)
         {
+            _restro = restro;
             _context = context;
             _hostEnvironment = hostEnvironment;
         }
@@ -35,16 +41,17 @@ namespace Restaurant.Controllers
         // GET: DetailsRestroes
         public async Task<IActionResult> Index()
         {
-            return View(await _context.DetailsRestroo.ToListAsync());
+            var restroo = _restro.GetAll();
+           return View(restroo);
+            //return View(await _context.DetailsRestroo.ToListAsync());
 
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Search(string obj)
         {
-           
-            var result =  _context.DetailsRestroo
-        .FirstOrDefault(d => d.Name.ToUpper().StartsWith(obj.ToUpper()));
+
+            var result = _restro.GetByName(obj); 
             if (result == null)
             {
                 TempData["notfound"] = "Restaurant Not Found";
@@ -54,15 +61,15 @@ namespace Restaurant.Controllers
         }
 
         // GET: DetailsRestroes/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public async Task<IActionResult> Details(int id)
         {
             if (id == null)
             {
                 return NotFound();
             }
-
-            var detailsRestro = await _context.DetailsRestroo
-                .FirstOrDefaultAsync(m => m.ID == id);
+            var detailsRestro = _restro.GetByID(id);
+            //var detailsRestro = await _context.DetailsRestroo
+                //.FirstOrDefaultAsync(m => m.ID == id);
             if (detailsRestro == null)
             {
                 return NotFound();
@@ -104,8 +111,8 @@ namespace Restaurant.Controllers
                     detailsRestro.Photo = fileName;
                 }
 
-                _context.Add(detailsRestro);
-                await _context.SaveChangesAsync();
+                _restro.Insert(detailsRestro);
+                _restro.save();
                 TempData["message"] = "New Restaurant Added Successfully.";
                 return RedirectToAction(nameof(Index));
             }
@@ -113,14 +120,14 @@ namespace Restaurant.Controllers
         }
 
         // GET: DetailsRestroes/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public async Task<IActionResult> Edit(int id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var detailsRestro = await _context.DetailsRestroo.FindAsync(id);
+            var detailsRestro = _restro.GetByID(id);
             if (detailsRestro == null)
             {
                 return NotFound();
@@ -174,7 +181,7 @@ namespace Restaurant.Controllers
                             detailsRestro.Photo = existingDetailsRestro.Photo;
 
                         }
-                        _context.Update(detailsRestro);
+                        _restro.Update(detailsRestro);
                      
                         TempData["message"] = "Restaurant Updated Successfully.";
                         await _context.SaveChangesAsync();
@@ -197,15 +204,15 @@ namespace Restaurant.Controllers
         }
 
         // GET: DetailsRestroes/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public async Task<IActionResult> Delete(int id)
         {
             if (id == null)
             {
                 return NotFound();
             }
-
-            var detailsRestro = await _context.DetailsRestroo
-                .FirstOrDefaultAsync(m => m.ID == id);
+            var detailsRestro = _restro.GetByID(id);
+            //var detailsRestro = await _context.DetailsRestroo
+               // .FirstOrDefaultAsync(m => m.ID == id);
             if (detailsRestro == null)
             {
                 return NotFound();
@@ -219,14 +226,15 @@ namespace Restaurant.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var detailsRestro = await _context.DetailsRestroo.FindAsync(id);
+            var detailsRestro= _restro.GetByID(id);
+            //var detailsRestro = await _context.DetailsRestroo.FindAsync(id);
             if (detailsRestro != null)
             {
-                
-                _context.DetailsRestroo.Remove(detailsRestro);
+
+                _restro.Delete(detailsRestro);
             }
             TempData["message"] = "Restaurant Removed Successfully.";
-            await _context.SaveChangesAsync();
+             _restro.save();
             return RedirectToAction(nameof(Index));
         }
 
