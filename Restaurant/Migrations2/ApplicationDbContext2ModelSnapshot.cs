@@ -22,6 +22,33 @@ namespace Restaurant.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("Restaurant.Models.Comments", b =>
+                {
+                    b.Property<int>("CmtId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CmtId"));
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("RestroId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("CmtId");
+
+                    b.ToTable("UserComments");
+                });
+
             modelBuilder.Entity("Restaurant.Models.DetailsRestro", b =>
                 {
                     b.Property<int>("ID")
@@ -53,14 +80,13 @@ namespace Restaurant.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Photo")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<TimeOnly>("Time")
                         .HasColumnType("time");
 
                     b.Property<string>("Website")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("path")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 

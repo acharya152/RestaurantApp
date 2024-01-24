@@ -6,8 +6,8 @@ namespace Restaurant.Services
 {
     public class Restrorepo : IRestro
     {
-        private readonly ApplicationDbContext _db;
-        public Restrorepo(ApplicationDbContext db)
+        private readonly ApplicationDbContext2 _db;
+        public Restrorepo(ApplicationDbContext2 db)
         {
                 _db= db;
         }

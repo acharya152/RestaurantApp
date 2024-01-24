@@ -1,0 +1,63 @@
+﻿@model IEnumerable<Restaurant.Models.Comments>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+<form id="commentForm" >
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+    <div class="input-group">
+        <input id="commentInput" class="form-control" placeholder="Add a Comment." />
+        <div class="input-group-append">
+            <button type="button" id="commentButton" class="btn btn-success">Comment</button>
+        </div>
+    </div>
+
+    <span id="errorMessage" class="text-danger"></span>
+</form>
+
+<script>
+    $(document).ready(function () {
+        // Attach click event to the button
+        $("#commentButton").click(function () {
+            // Get the comment input value
+            var commentText = $("#commentInput").val();
+            debugger;
+            // Make AJAX call
+            $.ajax({
+                url: '/Comments/Create', // Replace with the actual URL
+                type: 'POST',
+                data: { content: commentText },
+                success: function (result) {
+                    // Handle success, if needed
+                   // window.alert("success");
+                    location.reload();
+                },
+                error: function (xhr, status, error) {
+                    // Handle error
+                    $("#errorMessage").text("Error: " + error);
+                }
+            });
+        });
+    });
+</script>
+
+
+
+@foreach(var item in Model)
+{
+    <div class="d-flex" style="margin-top:5vh;">
+        <div>
+            <img class="imgcmt" src="~/icon.png" width="40" height="40" />
+           
+        </div>
+        <div style="margin-left:1vw;">
+            <h6><b> @Html.DisplayFor(modelItem => item.UserName)</b></h6>
+            <p>@Html.DisplayFor(modelItem => item.Content)</p>
+        </div>
+    </div>
+}

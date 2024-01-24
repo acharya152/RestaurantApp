@@ -10,8 +10,9 @@ var connectionString = builder.Configuration.GetConnectionString("RestaurantDbCo
 builder.Services.AddDbContext<RestaurantDbContext>(options => options.UseSqlServer(connectionString));
 builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("RestaurantDbContextConnection")));
 builder.Services.AddDbContext<ApplicationDbContext2>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("RestaurantDbContextConnection")));
-builder.Services.AddDefaultIdentity<RestaurantUser>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<RestaurantDbContext>();
+builder.Services.AddDefaultIdentity<RestaurantUser>(options => options.SignIn.RequireConfirmedAccount = true).AddRoles<IdentityRole>().AddEntityFrameworkStores<RestaurantDbContext>();
 builder.Services.AddTransient<IRestro, Restrorepo>();
+builder.Services.AddTransient<IComments, CommentsRepo>();
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 

@@ -1,0 +1,55 @@
+﻿@* <style>
+    #commentsContainer {
+        max-height:70vh; 
+        overflow-y: auto; 
+        border: 1px solid #ccc; 
+        padding: 10px; 
+    }
+</style> *@
+<div id="commentsContainer">
+
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script>
+   
+    $(document).ready(function () {
+        loadComments();
+        // Function to load comments via Ajax
+        function loadComments() {
+            $.ajax({
+               
+                url: '/Comments/Index?id=' + @TempData["id"],
+                type: 'GET',
+                success: function (data) {
+                    displayComments(data);
+                },
+                error: function () {
+                    console.error('Error fetching comments');
+                }
+            });
+        }
+
+        // Function to display comments in the container
+        function displayComments(comments) {
+            var container = $('#commentsContainer');
+            container.empty();
+
+            $.each(comments, function (index, item) {
+                var commentHtml = '<div class="d-flex" style="margin-top:5vh;">' +
+                    '<div>' +
+                    '<img class="imgcmt" src="' + '@Url.Content("~/icon.png")' + '" width="40" height="40" />' +
+                    '</div>' +
+                    '<div style="margin-left:1vw;">' +
+                    '<h6><b>' + item.userName + '</b></h6>' +
+                    '<p>' + item.content + '</p>' +
+                    '</div>' +
+                    '</div>';
+
+                container.append(commentHtml);
+            });
+        }
+       
+        
+    });
+</script>

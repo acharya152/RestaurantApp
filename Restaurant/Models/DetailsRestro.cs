@@ -15,6 +15,7 @@ namespace Restaurant.Models
         public string Website { get; set; }
 
        public string? Photo { get; set; }
+        
        
        
 

@@ -18,6 +18,7 @@ using System.IO;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Hosting.Internal;
 using Restaurant.Infrastructure;
+using Microsoft.AspNetCore.Authorization;
 
 
 namespace Restaurant.Controllers
@@ -26,19 +27,22 @@ namespace Restaurant.Controllers
     {
         private readonly ApplicationDbContext2 _context;
         private readonly IRestro _restro;
+        private readonly IComments _ucomment;
 
        
 
         private readonly IWebHostEnvironment _hostEnvironment;
 
-        public DetailsRestroesController(ApplicationDbContext2 context, IWebHostEnvironment hostEnvironment, IRestro restro)
+        public DetailsRestroesController(ApplicationDbContext2 context, IWebHostEnvironment hostEnvironment, IRestro restro,IComments ucomment)
         {
             _restro = restro;
             _context = context;
+            _ucomment = ucomment;
             _hostEnvironment = hostEnvironment;
         }
 
         // GET: DetailsRestroes
+        [Authorize]
         public async Task<IActionResult> Index()
         {
             var restroo = _restro.GetAll();
@@ -46,6 +50,7 @@ namespace Restaurant.Controllers
             //return View(await _context.DetailsRestroo.ToListAsync());
 
         }
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Search(string obj)
@@ -59,10 +64,11 @@ namespace Restaurant.Controllers
             }
             return View(result);
         }
-
+        [Authorize]
         // GET: DetailsRestroes/Details/5
         public async Task<IActionResult> Details(int id)
         {
+            TempData["id"]=id;
             if (id == null)
             {
                 return NotFound();
@@ -77,7 +83,7 @@ namespace Restaurant.Controllers
 
             return View(detailsRestro);
         }
-
+        [Authorize]
         // GET: DetailsRestroes/Create
         public IActionResult Create()
         {
@@ -89,6 +95,7 @@ namespace Restaurant.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public async Task<IActionResult> Create([Bind("ID,Name,Location,Description,DetailedDescription,PhoneNo,Time,CloseTime,Website")] DetailsRestro detailsRestro,IFormFile photoFile)
         {
 
@@ -120,6 +127,7 @@ namespace Restaurant.Controllers
         }
 
         // GET: DetailsRestroes/Edit/5
+        [Authorize]
         public async Task<IActionResult> Edit(int id)
         {
             if (id == null)
@@ -141,6 +149,7 @@ namespace Restaurant.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [ActionName("Edit")]
+        [Authorize]
         public async Task<IActionResult> Edit(int id, [Bind("ID,Name,Location,Description,DetailedDescription,PhoneNo,Time,CloseTime,Website")] DetailsRestro detailsRestro, IFormFile? photoFile)
         {
             if (id != detailsRestro.ID)
@@ -204,6 +213,7 @@ namespace Restaurant.Controllers
         }
 
         // GET: DetailsRestroes/Delete/5
+        [Authorize]
         public async Task<IActionResult> Delete(int id)
         {
             if (id == null)
@@ -222,22 +232,25 @@ namespace Restaurant.Controllers
         }
 
         // POST: DetailsRestroes/Delete/5
+        [Authorize]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var detailsRestro= _restro.GetByID(id);
+            
             //var detailsRestro = await _context.DetailsRestroo.FindAsync(id);
             if (detailsRestro != null)
             {
-
+                _ucomment.DelById(id);
+                _ucomment.save();
                 _restro.Delete(detailsRestro);
             }
             TempData["message"] = "Restaurant Removed Successfully.";
              _restro.save();
             return RedirectToAction(nameof(Index));
         }
-
+        [Authorize]
         private bool DetailsRestroExists(int id)
         {
             return _context.DetailsRestroo.Any(e => e.ID == id);

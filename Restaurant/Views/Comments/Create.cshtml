@@ -1,0 +1,25 @@
+﻿@model Restaurant.Models.Comments
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+   
+  
+
+<form asp-action="Create">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+    <div class="input-group">
+        <input asp-for="Content" class="form-control" placeholder="Add a Comment." />
+        <div class="input-group-append">
+            <button type="submit" class="btn btn-success">Comment</button>
+        </div>
+    </div>
+
+    <span asp-validation-for="Content" class="text-danger"></span>
+</form>
+
+        

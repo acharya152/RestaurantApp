@@ -10,9 +10,10 @@
 <div>
   
     <hr />
+    @* <div>
+        <img src="~/lib/Images/@Html.DisplayFor(model => model.Photo)" style="width:500px; height: 500px; border-radius:300px" />
+    </div> *@
     <div>
-        <img src="~/lib/Images/@Html.DisplayFor(model => model.Photo)" style="width:500px; height: 500px;" />
-    </div>
     <dl class="row">
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Name)
@@ -74,4 +75,5 @@
         <input type="submit" value="Delete" class="btn btn-danger" /> 
         <a  class="btn btn-success"asp-action="Index">Back to List</a>
     </form>
+    </div>
 </div>

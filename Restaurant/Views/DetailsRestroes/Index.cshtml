@@ -1,105 +1,75 @@
 ﻿@model IEnumerable<Restaurant.Models.DetailsRestro>
-
 @{
-   
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<partial name="Alert"/>
 
-<p>
-    <a class="btn btn-outline-danger"asp-action="Create">Add New Restro.</a>
-</p>
-<form asp-action="Search" class="d-flex">
-    <div class="input-group">
-        <input name="obj" class="form-control" placeholder="Search By Name." style="width:30vw" required />
-        <div class="input-group-append">
-            <button class="btn btn-primary" type="submit" name="Search">Search</button>
-        </div>
-    </div>
-</form>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Photo)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Location)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Description)
-            </th>
-           
-            <th> 
-                @Html.DisplayNameFor(model => model.PhoneNo)
-            </th>
-            <!--
-            <th>
-                @Html.DisplayNameFor(model => model.Time)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CloseTime)
-            </th>
-            -->
-            <th>
-                @Html.DisplayNameFor(model => model.Website)
-            </th>
-            <th>Actions</th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.css" />
+    <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.js"></script>
+    <script>
+       
+        $(document).ready(function () {
+            
+            $('#tabledata').DataTable({
+                "lengthMenu": [3, 10, 50, 100],
+            });
 
-        <tr>
-           
-                <td>
-                    <img src="~/lib/Images/@Html.DisplayFor(modelItem => item.Photo)" style="width: 200px; height: 200px;" />
-                </td>
-            
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Location)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            
-                <td>
-                    @Html.DisplayFor(modelItem => item.PhoneNo)
-                </td>
-          <!--      
-                <td>
-                    @Html.DisplayFor(modelItem => item.Time)
-                </td>
-                <td>
-                @Html.DisplayFor(modelItem => item.CloseTime)
-                </td>
-                  -->
-                <td>
-                    
-                   
-                        @{
-                            string websiteUrl = item.Website.StartsWith("http://") || item.Website.StartsWith("https://") ? item.Website
-                        : "https://" + item.Website;
+        });
+    </script>
+</head>
+<body>
+    @* <partial name="Alert" /> *@
+
+    @if (User.IsInRole("Admin"))
+    {
+        <p>
+            <a class="btn btn-outline-danger" asp-action="Create">Add New Restro.</a>
+        </p>
+    }
+
+    <table id="tabledata" class="display">
+        <thead>
+            <tr>
+                <th>@Html.DisplayNameFor(model => model.Photo)</th>
+                <th>@Html.DisplayNameFor(model => model.Name)</th>
+                <th>@Html.DisplayNameFor(model => model.Location)</th>
+                <th>@Html.DisplayNameFor(model => model.Description)</th>
+                <th>@Html.DisplayNameFor(model => model.PhoneNo)</th>
+                <th>@Html.DisplayNameFor(model => model.Website)</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td><img src="~/lib/Images/@Html.DisplayFor(modelItem => item.Photo)" style="width: 150px; height: 250px;" /></td>
+                    <td>@Html.DisplayFor(modelItem => item.Name)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Location)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Description)</td>
+                    <td>@Html.DisplayFor(modelItem => item.PhoneNo)</td>
+                    @{
+                        string websiteUrl = item.Website.StartsWith("http://") || item.Website.StartsWith("https://")
+                        ? item.Website : "https://" + item.Website;
                     }
-                    <a href="@websiteUrl" target="_blank">@Html.DisplayFor(modelItem => item.Website)</a>
-                </td>
-            <td>
-                <div class="actionbtn">
-                    <a class="btn btn-outline-success" asp-action="Edit" asp-route-id="@item.ID">Edit</a> 
-                    <a class="btn btn-outline-primary" asp-action="Details" asp-route-id="@item.ID">Details</a> 
-                    <a class="btn btn-outline-danger" asp-action="Delete" asp-route-id="@item.ID">Delete</a>
-                    </div>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
-
-
+                    <td><a href="@websiteUrl" target="_blank">@Html.DisplayFor(modelItem => item.Website)</a></td>
+                    <td>
+                        <div class="actionbtn">
+                            @if (User.IsInRole("Admin"))
+                            {
+                                <a class="btn btn-outline-success" asp-action="Edit" asp-route-id="@item.ID">Edit</a>
+                                <a class="btn btn-outline-danger" asp-action="Delete" asp-route-id="@item.ID">Delete</a>
+                            }
+                            <a class="btn btn-outline-success" asp-action="Details" asp-route-id="@item.ID">Details</a>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</body>
+</html>
