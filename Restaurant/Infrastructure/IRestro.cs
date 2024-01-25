@@ -6,7 +6,7 @@ namespace Restaurant.Infrastructure
     {
         List<DetailsRestro> GetAll();
         DetailsRestro GetByID(int id);
-        DetailsRestro GetByName(string obj);
+        
 
         void Insert (DetailsRestro detailsRestro);
         void Update (DetailsRestro detailsRestro);

@@ -51,19 +51,7 @@ namespace Restaurant.Controllers
 
         }
         
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult Search(string obj)
-        {
-
-            var result = _restro.GetByName(obj); 
-            if (result == null)
-            {
-                TempData["notfound"] = "Restaurant Not Found";
-                return RedirectToAction("Index");
-            }
-            return View(result);
-        }
+       
         [Authorize]
         // GET: DetailsRestroes/Details/5
         public async Task<IActionResult> Details(int id)
