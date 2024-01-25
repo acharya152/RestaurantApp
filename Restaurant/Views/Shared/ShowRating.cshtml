@@ -1,0 +1,40 @@
+﻿
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script>
+
+    $(document).ready(function () {
+        loadComments();
+        // Function to load comments via Ajax
+        function loadComments() {
+            $.ajax({
+
+                url: '/Ratings/Index?id=' + @TempData["id"],
+                type: 'GET',
+                success: function (data) {
+                    displayComments(data);
+                },
+                error: function () {
+                    console.error('Error fetching comments');
+                }
+            });
+        }
+
+        // Function to display comments in the container
+        function displayComments(comments) {
+            var container = $('#ratingContainer');
+            container.empty();
+            console.log(comments);
+            var avg = 0;
+            $.each(comments, function (index, item) {
+                var rating = item.ratings;
+                avg += rating;
+
+                
+            });
+            var average = (avg / comments.length).toFixed(2);
+            container.append(average);
+        }
+
+
+    });
+</script>

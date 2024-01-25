@@ -13,6 +13,8 @@ builder.Services.AddDbContext<ApplicationDbContext2>(options => options.UseSqlSe
 builder.Services.AddDefaultIdentity<RestaurantUser>(options => options.SignIn.RequireConfirmedAccount = true).AddRoles<IdentityRole>().AddEntityFrameworkStores<RestaurantDbContext>();
 builder.Services.AddTransient<IRestro, Restrorepo>();
 builder.Services.AddTransient<IComments, CommentsRepo>();
+builder.Services.AddTransient<IRestro, Restrorepo>();
+builder.Services.AddTransient<IRatings, RatingRepo>();
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 

@@ -1,0 +1,45 @@
+﻿<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+<form id="commentForm">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+    <div class="input-group" >
+        
+        <input class="form-control"  type="number" id="rateInput" placeholder="Add Rating." min="1" max="5" />
+        <div >
+            <button type="button" id="rateButton" class="btn btn-success">Rate</button>
+        </div>
+    </div>
+
+    <span id="errorMessage" class="text-danger"></span>
+</form>
+
+<script>
+    $(document).ready(function () {
+        // Attach click event to the button
+        $("#rateButton").click(function () {
+            // Get the comment input value
+            var rateValue = $("#rateInput").val();
+           var rateInt = parseInt(rateValue, 10);
+           
+            var id = @Model?.ID ?? 0;
+            debugger;
+            // Make AJAX call
+            $.ajax({
+                url: '/Ratings/Create', // Replace with the actual URL
+                type: 'POST',
+                data: { content: rateInt, id: id },
+                success: function (result) {
+                    // Handle success, if needed
+                    // window.alert("success");
+                    location.reload();
+                },
+                error: function (xhr, status, error) {
+                    // Handle error
+                    $("#errorMessage").text("Error: " + error);
+                }
+            });
+        });
+    });
+
+</script>

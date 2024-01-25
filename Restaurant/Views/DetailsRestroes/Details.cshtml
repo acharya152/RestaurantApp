@@ -4,13 +4,15 @@
     ViewData["Title"] = "Details";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
-
+<partial name="Alert"/>
+<partial name="ShowRating" />
 <div class="d-flex" >
 
     
     <div>
-        <img src="~/lib/Images/@Html.DisplayFor(model => model.Photo)" style="width:300px; height: 400px; " />
+        <img src="~/lib/Images/@Html.DisplayFor(model => model.Photo)" style="width:300px; height: 400px; " /><br /><br />
+        <partial name="Ratings"/>
+
         
 
     </div>
@@ -54,6 +56,10 @@
                     <a href="@websiteUrl" target="_blank">@Html.DisplayFor(modelItem => Model.Website)</a>
                 </td>
             </tr>
+            <tr>
+                <th>Average Rating</th>
+            <td id="ratingContainer"> </td>
+        </tr>
         </table>
 
         <div>

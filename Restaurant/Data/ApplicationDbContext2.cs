@@ -12,6 +12,7 @@ namespace Restaurant.Data
 
         public DbSet<DetailsRestro> DetailsRestroo { get; set; }
         public DbSet<Comments> UserComments { get; set; }
+        public DbSet<Rating> UserRatings { get; set; }
 
     }
 }
