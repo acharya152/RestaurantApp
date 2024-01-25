@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Restaurant.Data;
 using Restaurant.Infrastructure;
 using Restaurant.Models;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace Restaurant.Services
 {
@@ -31,20 +32,19 @@ namespace Restaurant.Services
         }
 
         public void Insert(DetailsRestro detailsRestro)
-        {
-            TimeSpan timeAsTimeSpan = detailsRestro.Time.ToTimeSpan();
-            TimeSpan closeTimeAsTimeSpan = detailsRestro.CloseTime.ToTimeSpan();
-            _db.Database.ExecuteSqlRaw("EXEC insertinto @Name, @Location, @Description, @DetailedDescription, @PhoneNo, @Time, @CloseTime, @Website, @Photo",
+        { 
+            /*_db.Database.ExecuteSqlRaw("EXEC insertinto @Name, @Location, @Description, @DetailedDescription, @PhoneNo, @Time, @CloseTime, @Website, @Photo",
                 new SqlParameter("@Name", detailsRestro.Name),
                 new SqlParameter("@Location", detailsRestro.Location),
                 new SqlParameter("@Description", detailsRestro.Description),
                 new SqlParameter("@DetailedDescription", detailsRestro.DetailedDescription),
                 new SqlParameter("@PhoneNo", detailsRestro.PhoneNo),
-                new SqlParameter("@Time", timeAsTimeSpan.ToString("hh\\:mm\\:ss")), // Assuming detailsRestro.Time is TimeSpan
-                new SqlParameter("@CloseTime", closeTimeAsTimeSpan.ToString("hh\\:mm\\:ss")), // Assuming detailsRestro.CloseTime is TimeSpan
+                new SqlParameter("@Time", DateTime.Parse(detailsRestro.Time.ToString())), // Assuming detailsRestro.Time is TimeSpan
+                new SqlParameter("@CloseTime", DateTime.Parse(detailsRestro.Time.ToString())), // Assuming detailsRestro.CloseTime is TimeSpan
                 new SqlParameter("@Website", detailsRestro.Website),
                 new SqlParameter("@Photo", detailsRestro.Photo)
-            );
+            );*/
+            _db.DetailsRestroo.Add(detailsRestro);
             _db.SaveChanges();
         }
 
