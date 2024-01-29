@@ -28,17 +28,19 @@ namespace Restaurant.Controllers
         private readonly ApplicationDbContext2 _context;
         private readonly IRestro _restro;
         private readonly IComments _ucomment;
+        private readonly IRatings _rate;
 
        
 
         private readonly IWebHostEnvironment _hostEnvironment;
 
-        public DetailsRestroesController(ApplicationDbContext2 context, IWebHostEnvironment hostEnvironment, IRestro restro,IComments ucomment)
+        public DetailsRestroesController(ApplicationDbContext2 context, IWebHostEnvironment hostEnvironment, IRestro restro,IComments ucomment,IRatings rate)
         {
             _restro = restro;
             _context = context;
             _ucomment = ucomment;
             _hostEnvironment = hostEnvironment;
+            _rate = rate;
         }
 
         // GET: DetailsRestroes
@@ -232,6 +234,8 @@ namespace Restaurant.Controllers
             {
                 _ucomment.DelById(id);
                 _ucomment.save();
+                _rate.Delete(id);
+                _rate.save();
                 _restro.Delete(detailsRestro);
             }
             TempData["message"] = "Restaurant Removed Successfully.";

@@ -3,17 +3,20 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Restaurant.Data;
 
 #nullable disable
 
-namespace Restaurant.Migrations
+namespace Restaurant.Migrations.ApplicationDbContext2Migrations
 {
     [DbContext(typeof(ApplicationDbContext2))]
-    partial class ApplicationDbContext2ModelSnapshot : ModelSnapshot
+    [Migration("20240125142322_changedatatype")]
+    partial class changedatatype
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

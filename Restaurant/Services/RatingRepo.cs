@@ -14,6 +14,13 @@ namespace Restaurant.Services
         {
             _db = db;
         }
+
+        public void Delete(int id)
+        {
+             _db.UserRatings.RemoveRange(_db.UserRatings.Where(x =>x.RestroID==id));
+           
+        }
+
         public List<Rating> GetAll(int id)
         {
             return _db.UserRatings.Where(x =>x.RestroID==id).ToList();
