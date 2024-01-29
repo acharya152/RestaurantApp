@@ -1,4 +1,6 @@
-﻿using Restaurant.Data;
+﻿using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
+using Restaurant.Data;
 using Restaurant.Infrastructure;
 using Restaurant.Models;
 
@@ -17,18 +19,31 @@ namespace Restaurant.Services
 
         public void Delete(int id)
         {
-             _db.UserRatings.RemoveRange(_db.UserRatings.Where(x =>x.RestroID==id));
+            SqlParameter param = new SqlParameter("@RestroId",id);
+            _db.Database.ExecuteSqlRaw($"EXEC deleteallrate @RestroId",param);
+            // _db.UserRatings.RemoveRange(_db.UserRatings.Where(x =>x.RestroID==id));
            
         }
 
         public List<Rating> GetAll(int id)
         {
-            return _db.UserRatings.Where(x =>x.RestroID==id).ToList();
+            try
+            {
+                SqlParameter param = new SqlParameter("@RestroId", id);
+                return _db.UserRatings.FromSqlRaw($"EXEC getrate @RestroId", param).ToList();
+                // return _db.UserRatings.Where(x =>x.RestroID==id).ToList();
+            }catch(Exception ex) {
+                Console.WriteLine(ex.Message);
+                return null;
+            }
         }
 
         public void Insert(Rating rating)
         {
-            _db.Add(rating);
+            SqlParameter param1 = new SqlParameter("@RestroId",rating.RestroID);
+            SqlParameter param2 = new SqlParameter("@Ratings", rating.Ratings);
+            _db.Database.ExecuteSqlRaw($"EXEC insertrate @RestroId,@Ratings",param1,param2);
+           // _db.Add(rating);
         }
 
         public void save()

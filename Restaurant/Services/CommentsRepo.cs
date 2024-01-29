@@ -1,6 +1,9 @@
-﻿using Restaurant.Data;
+﻿using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
+using Restaurant.Data;
 using Restaurant.Infrastructure;
 using Restaurant.Models;
+using System.Xml.Linq;
 
 namespace Restaurant.Services
 {
@@ -14,22 +17,46 @@ namespace Restaurant.Services
 
         public void Delete(Comments comments)
         {
-           _db.UserComments.Remove(comments);
+            SqlParameter param1 = new SqlParameter("@RestroId",comments.RestroId);
+            _db.Database.ExecuteSqlRaw($"EXEC deletecomment @RestroID",param1);
         }
 
         public List<Comments> GetAll(int id)
         {
-            return _db.UserComments.Where(x => x.RestroId == id).OrderByDescending(x => x.CmtId).ToList();
+
+            try
+            {
+                SqlParameter param1 = new SqlParameter("@RestroId", id);
+                return _db.UserComments.FromSqlRaw($"EXEC getallcmt @RestroId", param1).ToList();
+                
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+                return null;
+            }
+            
+          
+
+            //return _db.UserComments.Where(x => x.RestroId == id).OrderByDescending(x => x.CmtId).ToList();
         }
 
         public void DelById(int id)
         {
-            _db.UserComments.RemoveRange(_db.UserComments.Where(x => x.RestroId == id));
+            SqlParameter param1 = new SqlParameter("@RestroId", id);
+            _db.Database.ExecuteSqlRaw($"EXEC deletecomment @RestroID", param1);
+            //_db.UserComments.RemoveRange(_db.UserComments.Where(x => x.RestroId == id));
         }
 
         public void Insert(Comments comments)
         {
-            _db.UserComments.Add(comments);
+            SqlParameter param1 = new SqlParameter("@UserId",comments.UserId);
+            SqlParameter param2 = new SqlParameter("@RestroId", comments.RestroId);
+            SqlParameter param3 = new SqlParameter("@Content", comments.Content);
+            SqlParameter param4 = new SqlParameter("@UserName", comments.UserName);
+            _db.Database.ExecuteSqlRaw($"EXEC insertcmt @UserId,@RestroId,@Content,@UserName ",param1,param2,param3,param4);
+
+            _db.SaveChanges();
         }
 
         public void save()

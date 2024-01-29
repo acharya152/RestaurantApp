@@ -49,7 +49,7 @@ namespace Restaurant.Controllers
                  //_context.Add(objs);
                // _context.SaveChanges();
                 _rating.save();
-                TempData["message"] = "Rating added successfully";
+                TempData["rate"] = "Rating added successfully";
                 return RedirectToAction(nameof(Index));
             }
             return View();

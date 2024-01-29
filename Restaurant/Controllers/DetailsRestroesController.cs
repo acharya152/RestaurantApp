@@ -110,7 +110,7 @@ namespace Restaurant.Controllers
 
                 _restro.Insert(detailsRestro);
                 _restro.save();
-                TempData["message"] = "New Restaurant Added Successfully.";
+                TempData["addrestro"] = "New Restaurant Added Successfully.";
                 return RedirectToAction(nameof(Index));
             }
             return View(detailsRestro);
@@ -182,7 +182,7 @@ namespace Restaurant.Controllers
                         }
                         _restro.Update(detailsRestro);
                      
-                        TempData["message"] = "Restaurant Updated Successfully.";
+                        TempData["updtrestro"] = "Restaurant Updated Successfully.";
                         await _context.SaveChangesAsync();
                     }
                 }
@@ -238,7 +238,7 @@ namespace Restaurant.Controllers
                 _rate.save();
                 _restro.Delete(detailsRestro);
             }
-            TempData["message"] = "Restaurant Removed Successfully.";
+            TempData["delrestro"] = "Restaurant Removed Successfully.";
              _restro.save();
             return RedirectToAction(nameof(Index));
         }
