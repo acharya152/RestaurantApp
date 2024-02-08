@@ -1,6 +1,6 @@
-﻿using Restaurant.Models;
+﻿using ClassLibraryForRestro.Models;
 
-namespace Restaurant.Infrastructure
+namespace ClassLibraryForRestro.Infrastructure
 {
     public interface IComments
     {

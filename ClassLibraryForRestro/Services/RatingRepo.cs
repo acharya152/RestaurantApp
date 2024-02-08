@@ -1,10 +1,10 @@
 ﻿using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
-using Restaurant.Data;
-using Restaurant.Infrastructure;
-using Restaurant.Models;
+using ClassLibraryForRestro.Data;
+using ClassLibraryForRestro.Infrastructure;
+using ClassLibraryForRestro.Models;
 
-namespace Restaurant.Services
+namespace ClassLibraryForRestro.Services
 {
     public class RatingRepo : IRatings
 

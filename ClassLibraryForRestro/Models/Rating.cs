@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Restaurant.Models
+namespace ClassLibraryForRestro.Models
 {
     public class Rating
     {
