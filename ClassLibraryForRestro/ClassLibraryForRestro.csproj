@@ -15,4 +15,8 @@
     <Folder Include="Images\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Restaurant\Restaurant.csproj" />
+  </ItemGroup>
+
 </Project>
